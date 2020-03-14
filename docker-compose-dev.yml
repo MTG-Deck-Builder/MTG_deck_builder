@@ -1,0 +1,13 @@
+version: "3.2"
+services:
+  server_flask:
+    build: ./server_flask
+    ports:
+      - "3000:5000"
+    environment:
+      FLASK_APP: app
+      FLASK_ENV: "Development"
+      FLASK_DEBUG: 1
+    command: ["flask", "run", "--host=0.0.0.0"]
+    volumes:
+      - "./server_flask:/server_flask"

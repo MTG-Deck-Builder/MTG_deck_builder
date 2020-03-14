@@ -2,3 +2,4 @@ venv
 Scripts
 Lib
 Include
+__pycache__
