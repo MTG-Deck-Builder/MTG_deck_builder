@@ -1,4 +1,4 @@
-from card import app, db
+from server_flask import app, db
 
 # Card Class/Model
 

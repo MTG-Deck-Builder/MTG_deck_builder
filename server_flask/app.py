@@ -1,4 +1,4 @@
-from card import app
+from server_flask import app
 
 # Run Server
 if __name__ == '__main__':

@@ -5,7 +5,7 @@ import os
 
 # Initialize our app
 app = Flask(__name__)
-basedir = os.path.abspath(os.path.dirname('card'))
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 # Database
 # This will look for a sqlite file in our current folder that we are in
@@ -21,4 +21,4 @@ db = SQLAlchemy(app)
 # Initialize marshmallow
 ma = Marshmallow(app)
 
-from card import card_route
+from .card import card_route

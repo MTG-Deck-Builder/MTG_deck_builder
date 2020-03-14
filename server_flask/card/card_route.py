@@ -1,7 +1,7 @@
 from flask import request, jsonify
-from card.card_model import Card
-from card.card_schema import card_schema, cards_schema
-from card import app, db
+from .card_model import Card
+from .card_schema import card_schema, cards_schema
+from server_flask import app, db
 
 # ADD A SINGLE CARD
 @app.route('/card', methods=['POST'])

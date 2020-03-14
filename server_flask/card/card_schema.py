@@ -1,4 +1,4 @@
-from card import ma
+from server_flask import ma
 
 # Card Schema
 
