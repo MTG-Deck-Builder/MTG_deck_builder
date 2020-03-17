@@ -1,8 +1,11 @@
-from server_flask import app
+from config import app
+import routes
+
 
 @app.route('/', methods=['GET'])
 def index():
-   return 'Hello world'
+    return 'Hello world'
+
 
 # Run Server
 if __name__ == '__main__':
