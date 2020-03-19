@@ -1,4 +1,5 @@
 from flask import request, jsonify
+import bcrypt
 from models_schema.user_model_schema import User, user_schema
 from config import app, db
 
@@ -6,14 +7,35 @@ from config import app, db
 @app.route('/register', methods=['POST'])
 def add_user():
     username = request.json['username']
-    password = request.json['password']
-
-    new_user = User(username, password)
-
+    password = request.json['password'].encode('utf-8')
+    hashed_password = bcrypt.hashpw(password, bcrypt.gensalt(12))
+    new_user = User(username=username, password=hashed_password)
     db.session.add(new_user)
     db.session.commit()
-
     return user_schema.jsonify(new_user)
+
+# LOGIN WITH USERNAME & PASSWORD
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.json['username']
+    password = request.json['password'].encode('utf-8')
+    user = User.query.filter_by(username=username).first()
+    if (user):
+        if (bcrypt.checkpw(password, user.password)):
+            return {
+                "success": True
+            }
+        else:
+            return {
+                "success": False,
+                "error_message": "Incorrect password"
+            }
+    else:
+        return {
+            "success": False,
+            "error_message": "Username does not exist"
+        }
+
 
 # GET USER BY ID
 @app.route('/user/<id>', methods=['GET'])
