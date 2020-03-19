@@ -9,7 +9,7 @@ def get_decks(id):
     all_decks_of_user = Deck.query.filter_by(user_id=id).all()
     return decks_schema.jsonify(all_decks_of_user)
 
-
+# ADD A DECK (NO CARDS YET)
 @app.route('/user/<id>/decks', methods=['POST'])
 def add_deck(id):
     deck_name = request.json['deck_name']
@@ -22,7 +22,7 @@ def add_deck(id):
 
     return deck_schema.jsonify(added_deck)
 
-
+# GET AN ENTIRE DECKLIST BY DECK ID
 @app.route('/decks/<id>', methods=['GET'])
 def get_deck_by_id(id):
     cards_for_deck = Card.query.join(Deck_Cards, Card.id == Deck_Cards.card_id).add_columns(
