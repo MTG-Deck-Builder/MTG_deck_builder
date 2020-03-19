@@ -20,5 +20,3 @@ db = SQLAlchemy(app)
 
 # Initialize marshmallow
 ma = Marshmallow(app)
-
-from .card import card_route
