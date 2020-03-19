@@ -4,13 +4,11 @@ from config import app, db, ma
 
 
 class Card(db.Model):
+    __tablename__ = 'card'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True)
     image = db.Column(db.String(100), unique=True)
-
-    def __init__(self, name, image):
-        self.name = name
-        self.image = image
+    deck_cards = db.relationship('Deck_Cards', backref='card', lazy=True)
 
 # Card Schema
 

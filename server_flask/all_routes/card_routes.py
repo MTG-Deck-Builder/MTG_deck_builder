@@ -8,7 +8,7 @@ def add_card():
     name = request.json['name']
     image = request.json['image']
 
-    new_card = Card(name, image)
+    new_card = Card(name=name, image=image)
 
     db.session.add(new_card)
     db.session.commit()
