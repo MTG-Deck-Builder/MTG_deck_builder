@@ -1,6 +1,0 @@
-endpoint: https://us1.prisma.sh/rsalvarado777-b6a962/mtg_deck_builder/dev
-datamodel: datamodel.prisma
-
-generate:
-  - generator: javascript-client
-    output: ./generated/prisma-client/
