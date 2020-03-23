@@ -3,15 +3,18 @@ from datetime import datetime
 from models_schema.card_model_schema import Card
 from models_schema.user_model_schema import User
 from models_schema.deck_model_schema import Deck, Deck_Cards
+import bcrypt
 
 
 def seed_data():
     db.drop_all()
     db.create_all()
 
-    ronny = User(username='Ronny', password='password', createdAt=datetime(2020, 3, 3))
-    brandon = User(username='Brandon', password='password', createdAt=datetime(2020, 3, 3))
-    kaiser = User(username='Kaiser', password='password', createdAt=datetime(2020, 3, 18))
+    hashed_password = bcrypt.hashpw(b'secretpassword', bcrypt.gensalt(12))
+
+    ronny = User(username='Ronny', password=hashed_password, createdAt=datetime(2020, 3, 3))
+    brandon = User(username='Brandon', password=hashed_password, createdAt=datetime(2020, 3, 3))
+    kaiser = User(username='Kaiser', password=hashed_password, createdAt=datetime(2020, 3, 18))
     db.session.add(ronny)
     db.session.add(brandon)
     db.session.add(kaiser)
