@@ -1,0 +1,16 @@
+.login-page-container {
+  background-image: url("/planeswalkerbackground.jpg");
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .input-button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 25%;
+    height: 20%;
+  }
+}
