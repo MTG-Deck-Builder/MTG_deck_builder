@@ -12,9 +12,9 @@ def seed_data():
 
     hashed_password = bcrypt.hashpw(b'secretpassword', bcrypt.gensalt(12))
 
-    ronny = User(username='Ronny', password=hashed_password, createdAt=datetime(2020, 3, 3))
-    brandon = User(username='Brandon', password=hashed_password, createdAt=datetime(2020, 3, 3))
-    kaiser = User(username='Kaiser', password=hashed_password, createdAt=datetime(2020, 3, 18))
+    ronny = User(username='Ronny', email='Rsalvarado777@gmail.com', password=hashed_password, createdAt=datetime(2020, 3, 3))
+    brandon = User(username='Brandon', email='Brandon@example.com', password=hashed_password, createdAt=datetime(2020, 3, 3))
+    kaiser = User(username='Kaiser', email='Kaiser@example.com', password=hashed_password, createdAt=datetime(2020, 3, 18))
     db.session.add(ronny)
     db.session.add(brandon)
     db.session.add(kaiser)

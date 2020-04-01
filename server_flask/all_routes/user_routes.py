@@ -6,16 +6,18 @@ from functools import wraps
 from models_schema.user_model_schema import User, user_schema
 from config import app, db
 from all_routes.auth_middleware import token_required
+import pdb
 
 app.config['SECRET_KEY'] = 'thisismysecretkey'
 
 # ADD A SINGLE USER
 @app.route('/register', methods=['POST'])
 def add_user():
+    email = request.json['email']
     username = request.json['username']
     password = request.json['password'].encode('utf-8')
     hashed_password = bcrypt.hashpw(password, bcrypt.gensalt(12))
-    new_user = User(username=username, password=hashed_password)
+    new_user = User(email=email, username=username, password=hashed_password)
     db.session.add(new_user)
     db.session.commit()
     return user_schema.jsonify(new_user)
@@ -23,17 +25,17 @@ def add_user():
 # LOGIN WITH USERNAME & PASSWORD
 @app.route('/login', methods=['POST'])
 def login():
-    username = request.json['username']
+    email = request.json['email']
     password = request.json['password'].encode('utf-8')
-    user = User.query.filter_by(username=username).first()
+    user = User.query.filter_by(email=email).first()
     if (user):
         if (bcrypt.checkpw(password, user.password)):
             token = jwt.encode({'user': user.username, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
-            return jsonify({'token': token.decode('UTF-8')})
+            return jsonify({'message': f'Welcome, {user.username}', 'token': token.decode('UTF-8')})
         else:
             return jsonify({'success': False, 'message': 'Invalid password'})
     else:
-        return jsonify({'success': False, 'message': 'Username does not exist'})
+        return jsonify({'success': False, 'message': 'Email does not exist'})
 
 
 # GET USER BY ID
@@ -44,6 +46,7 @@ def get_user(id):
     return user_schema.jsonify(found_user)
 
 # UPDATE USER BY ID
+# This one is a work in progress until we figure out what we would like to edit
 @app.route('/user/<id>', methods=['PUT'])
 def update_user(id):
     found_user = User.query.get(id)
