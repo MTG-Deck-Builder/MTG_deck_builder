@@ -7,7 +7,7 @@ import Login from "./views/Login/Login";
 import "./App.scss";
 
 function App() {
-  return <Route path="/login" component={Login} />;
+  return <Route exact path="/" component={Login} />;
 }
 
 export default App;

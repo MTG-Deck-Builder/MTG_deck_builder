@@ -31,11 +31,11 @@ def login():
     if (user):
         if (bcrypt.checkpw(password, user.password)):
             token = jwt.encode({'user': user.username, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
-            return jsonify({'message': f'Welcome, {user.username}', 'token': token.decode('UTF-8')})
+            return jsonify({'username': user.username, 'user_id': user.id, 'token': token.decode('UTF-8')})
         else:
-            return jsonify({'success': False, 'message': 'Invalid password'})
+            return jsonify({'success': False, 'error': 'Invalid password'})
     else:
-        return jsonify({'success': False, 'message': 'Email does not exist'})
+        return jsonify({'success': False, 'error': 'Email does not exist'})
 
 
 # GET USER BY ID

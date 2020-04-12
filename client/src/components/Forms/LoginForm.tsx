@@ -1,21 +1,34 @@
 // packages
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import axios from "axios";
+import { withRouter } from "react-router";
 
 // modules
 import Button from "../Button/Button";
 import "./loginForm.scss";
+import {
+  LOGIN_START,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+} from "../../reducers/index";
 
 interface Creds {
   email?: string;
   password?: string;
 }
 
-const LoginForm: React.FC = () => {
+interface Props {
+  history: any;
+}
+
+const LoginForm: React.FC<Props> = ({ history }) => {
   const [credentials, setCredentials] = useState<Creds>({
     email: "",
-    password: ""
+    password: "",
   });
+
+  const dispatch = useDispatch();
 
   const handleChange = (e: any) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -23,13 +36,19 @@ const LoginForm: React.FC = () => {
 
   const login = async (e: any) => {
     e.preventDefault();
+    dispatch({ type: LOGIN_START });
     const res = await axios.post("http://localhost:5000/login", credentials);
-    console.log("Checking to see what is in the user object");
-    console.log(res.config.data);
+    if (res.data.token) {
+      dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+      localStorage.setItem("token", res.data.token);
+      history.push("/dashboard");
+    } else {
+      dispatch({ type: LOGIN_FAILURE, payload: res.data });
+    }
   };
 
   return (
-    <form onSubmit={e => login(e)}>
+    <form onSubmit={(e) => login(e)}>
       <input
         type="text"
         name="email"
@@ -49,4 +68,4 @@ const LoginForm: React.FC = () => {
   );
 };
 
-export default LoginForm;
+export default withRouter(LoginForm);
