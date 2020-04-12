@@ -48,24 +48,24 @@ def seed_data():
     decks.append(Deck(deck_name='UW Control', createdAt=datetime(2020, 3, 18), user_id=3))
 
     # Kaiser's UW Control (RTR Standard)
-    deck_of_cards.append(Deck_Cards(deck_id=3, card_id=1, count=4))  # Azorius Charm
-    deck_of_cards.append(Deck_Cards(deck_id=3, card_id=2, count=3))  # Dissolve
-    deck_of_cards.append(Deck_Cards(deck_id=3, card_id=3, count=3))  # Doom Blade
-    deck_of_cards.append(Deck_Cards(deck_id=3, card_id=4, count=4))  # Hero's Downfall
-    deck_of_cards.append(Deck_Cards(deck_id=3, card_id=5, count=3))  # Sphinx's Revelation
-    deck_of_cards.append(Deck_Cards(deck_id=3, card_id=6, count=4))  # Sphinx's Revelation
-    deck_of_cards.append(Deck_Cards(deck_id=3, card_id=7, count=3))  # Detention Sphere
-    deck_of_cards.append(Deck_Cards(deck_id=3, card_id=8, count=2))  # Elspeth, Sun's Champion
-    deck_of_cards.append(Deck_Cards(deck_id=3, card_id=9, count=4))  # Jace, Architect of Thought
-    deck_of_cards.append(Deck_Cards(deck_id=3, card_id=10, count=1))  # Aetherling
-    deck_of_cards.append(Deck_Cards(deck_id=3, card_id=11, count=2))  # Blood Baron of Vizkopa
-    deck_of_cards.append(Deck_Cards(deck_id=3, card_id=12, count=4))  # Godless Shrine
-    deck_of_cards.append(Deck_Cards(deck_id=3, card_id=13, count=4))  # Hallowed Fountain
-    deck_of_cards.append(Deck_Cards(deck_id=3, card_id=14, count=4))  # Island
-    deck_of_cards.append(Deck_Cards(deck_id=3, card_id=15, count=2))  # Plains
-    deck_of_cards.append(Deck_Cards(deck_id=3, card_id=16, count=4))  # Temple of Deceit
-    deck_of_cards.append(Deck_Cards(deck_id=3, card_id=17, count=4))  # Temple of Silence
-    deck_of_cards.append(Deck_Cards(deck_id=3, card_id=18, count=4))  # Watery Grave
+    deck_of_cards.append(Deck_Cards(deck_id=1, card_id=1, count=4))  # Azorius Charm
+    deck_of_cards.append(Deck_Cards(deck_id=1, card_id=2, count=3))  # Dissolve
+    deck_of_cards.append(Deck_Cards(deck_id=1, card_id=3, count=3))  # Doom Blade
+    deck_of_cards.append(Deck_Cards(deck_id=1, card_id=4, count=4))  # Hero's Downfall
+    deck_of_cards.append(Deck_Cards(deck_id=1, card_id=5, count=3))  # Sphinx's Revelation
+    deck_of_cards.append(Deck_Cards(deck_id=1, card_id=6, count=4))  # Sphinx's Revelation
+    deck_of_cards.append(Deck_Cards(deck_id=1, card_id=7, count=3))  # Detention Sphere
+    deck_of_cards.append(Deck_Cards(deck_id=1, card_id=8, count=2))  # Elspeth, Sun's Champion
+    deck_of_cards.append(Deck_Cards(deck_id=1, card_id=9, count=4))  # Jace, Architect of Thought
+    deck_of_cards.append(Deck_Cards(deck_id=1, card_id=10, count=1))  # Aetherling
+    deck_of_cards.append(Deck_Cards(deck_id=1, card_id=11, count=2))  # Blood Baron of Vizkopa
+    deck_of_cards.append(Deck_Cards(deck_id=1, card_id=12, count=4))  # Godless Shrine
+    deck_of_cards.append(Deck_Cards(deck_id=1, card_id=13, count=4))  # Hallowed Fountain
+    deck_of_cards.append(Deck_Cards(deck_id=1, card_id=14, count=4))  # Island
+    deck_of_cards.append(Deck_Cards(deck_id=1, card_id=15, count=2))  # Plains
+    deck_of_cards.append(Deck_Cards(deck_id=1, card_id=16, count=4))  # Temple of Deceit
+    deck_of_cards.append(Deck_Cards(deck_id=1, card_id=17, count=4))  # Temple of Silence
+    deck_of_cards.append(Deck_Cards(deck_id=1, card_id=18, count=4))  # Watery Grave
 
     for playset in deck_of_cards:
         db.session.add(playset)
