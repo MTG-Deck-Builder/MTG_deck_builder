@@ -1,8 +1,38 @@
 .decklist-page {
+  width: 100%;
   .decklist-container {
-    img {
-      width: 22rem;
-      height: 30rem;
+    display: flex;
+    .decklist-images {
+      max-width: 69%;
+      img {
+        margin: 20px;
+        width: 22rem;
+        height: 30rem;
+      }
+    }
+    .decklist-names {
+      border: 1px solid black;
+      width: 31%;
+      .card-name {
+        width: 100%;
+        height: 50px;
+        border-bottom: 2px solid white;
+        display: flex;
+        background: black;
+        display: flex;
+        align-items: center;
+        .count {
+          font-size: 2rem;
+          color: white;
+          background: black;
+          margin: 10px;
+        }
+        .name {
+          font-size: 2rem;
+          color: white;
+          background: black;
+        }
+      }
     }
   }
 }

@@ -8,6 +8,7 @@ import {
   DECKLIST_FAILURE,
 } from "../../reducers/index";
 import "./decklist.scss";
+import Navigation from "../../components/Navigation/Navigation";
 
 interface Card {
   count: number;
@@ -34,10 +35,23 @@ const Decklist: React.FC = () => {
   }, []);
   return (
     <div className="decklist-page">
+      <Navigation />
       <div className="decklist-container">
-        {current_deck.map((card: Card) => {
-          return <img src={card.image} alt={card.name} />;
-        })}
+        <div className="decklist-images">
+          {current_deck.map((card: Card) => {
+            return <img src={card.image} alt={card.name} />;
+          })}
+        </div>
+        <div className="decklist-names">
+          {current_deck.map((card: Card) => {
+            return (
+              <div className="card-name">
+                <div className="count">{card.count}x</div>
+                <div className="name">{card.name}</div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
