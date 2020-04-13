@@ -1,0 +1,11 @@
+button {
+  width: 40%;
+  color: white;
+  background: linear-gradient(#f24f09, #fe911a);
+  height: 25%;
+  font-size: 2rem;
+  border-radius: 50px;
+  &:hover {
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,17 @@
+.dashboard-container {
+  width: 100%;
+  .deck-container {
+    .deck {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      width: 200px;
+      height: 200px;
+      border: 2px solid black;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

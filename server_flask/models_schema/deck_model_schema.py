@@ -34,7 +34,7 @@ deck_card_schema = DeckCardSchema(many=True)
 
 class DeckSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'deck_name', 'createdAt', 'user_id')
+        fields = ('id', 'deck_name', 'user_id')
 
 
 # Initialize the Schema

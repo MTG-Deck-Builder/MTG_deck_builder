@@ -1,0 +1,15 @@
+nav {
+  border: 2px solid black;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  background: gray;
+  a {
+    font-size: 2rem;
+    margin: 1rem;
+    .selected {
+      text-decoration: overline underline;
+    }
+  }
+}
