@@ -8,6 +8,9 @@ export const DECKLIST_START = "DECKLIST_START";
 export const DECKLIST_SUCCESS = "DECKLIST_SUCCESS";
 export const DECKLIST_FAILURE = "DECKLIST_FAILURE";
 export const SET_DECKLIST_ID = "SET_DECKLIST_ID";
+export const PAGE_START = "PAGE_START";
+export const PAGE_SUCCESS = "PAGE_SUCCESS";
+export const PAGE_FAILURE = "PAGE_FAILURE";
 
 export interface State {
   username: string;
@@ -17,6 +20,13 @@ export interface State {
   all_decks: Decks[];
   current_deck: List[];
   current_deck_id: number | null;
+  current_card_pool: Card_Pool[];
+}
+
+export interface Card_Pool {
+  id: number;
+  image: string;
+  name: string;
 }
 
 export interface List {
@@ -44,6 +54,7 @@ const initialState: State = {
   all_decks: [],
   current_deck: [],
   current_deck_id: null,
+  current_card_pool: [],
 };
 
 export function reducer(state: State = initialState, action: Action) {
@@ -105,6 +116,23 @@ export function reducer(state: State = initialState, action: Action) {
       return {
         ...state,
         current_deck_id: action.payload,
+      };
+    case PAGE_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case PAGE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        current_card_pool: action.payload,
+      };
+    case PAGE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
       };
     default:
       return { ...state };
