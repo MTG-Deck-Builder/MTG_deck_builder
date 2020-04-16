@@ -7,13 +7,13 @@ interface Props {
   image: string;
 }
 
-const Card: React.FC<Props> = ({ name, image }) => {
+const CardImage: React.FC<Props> = ({ name, image }) => {
   const dispatch = useDispatch();
-  const increment = () => {
+  const increment: any = () => {
     dispatch({ type: INCREMENT_COUNT, payload: { name, image } });
   };
 
   return <img src={image} alt={name} onClick={increment} />;
 };
 
-export default Card;
+export default CardImage;

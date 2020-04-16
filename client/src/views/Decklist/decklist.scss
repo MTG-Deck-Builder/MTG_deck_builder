@@ -4,10 +4,18 @@
     display: flex;
     .decklist-images {
       max-width: 69%;
+      width: 100%;
+      button {
+        width: 100px;
+        height: 50px;
+      }
       img {
         margin: 20px;
         width: 22rem;
         height: 30rem;
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
     .decklist-names {
@@ -31,6 +39,9 @@
           font-size: 2rem;
           color: white;
           background: black;
+        }
+        &:hover {
+          cursor: pointer;
         }
       }
     }

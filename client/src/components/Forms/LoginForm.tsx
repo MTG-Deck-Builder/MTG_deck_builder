@@ -40,7 +40,9 @@ const LoginForm: React.FC<Props> = ({ history }) => {
     const res = await axios.post("http://localhost:5000/login", credentials);
     if (res.data.token) {
       dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+      console.log(res.data);
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user_id", res.data.user_id);
       history.push("/dashboard");
     } else {
       dispatch({ type: LOGIN_FAILURE, payload: res.data });

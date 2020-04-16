@@ -158,6 +158,21 @@ export function reducer(state: State = initialState, action: Action) {
         ...state,
         current_deck: updated_deck,
       };
+    case DECREMENT_COUNT:
+      const index2 = state.current_deck.findIndex(
+        (card) => card.name === action.payload.name
+      );
+      let updated_deck2 = [...state.current_deck];
+      if (updated_deck2[index2].count >= 1) {
+        updated_deck2[index2] = {
+          ...updated_deck2[index2],
+          count: updated_deck2[index2].count - 1,
+        };
+      }
+      return {
+        ...state,
+        current_deck: updated_deck2,
+      };
     default:
       return { ...state };
   }

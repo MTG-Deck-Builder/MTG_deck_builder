@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { State } from "../../reducers/index";
-import Card from "../../components/Card/Card";
+import CardImage from "../../components/CardImage/CardImage";
+import CardName from "../../components/CardName/CardName";
 import {
   DECKLIST_START,
   DECKLIST_SUCCESS,
@@ -17,7 +18,7 @@ import "./decklist.scss";
 import Navigation from "../../components/Navigation/Navigation";
 
 const Decklist: React.FC = () => {
-  const { current_deck_id, current_deck, current_card_pool } = useSelector(
+  let { current_deck_id, current_deck, current_card_pool } = useSelector(
     (state: State) => state
   );
   const [page, setPage] = useState<number>(1);
@@ -25,6 +26,9 @@ const Decklist: React.FC = () => {
 
   useEffect(() => {
     dispatch({ type: DECKLIST_START });
+    if (current_deck_id === null) {
+      current_deck_id = Number(localStorage.getItem("current_deck_id"));
+    }
     axios
       .get(`http://localhost:5000/decks/${current_deck_id}`)
       .then((res) => {
@@ -62,7 +66,7 @@ const Decklist: React.FC = () => {
       <div className="decklist-container">
         <div className="decklist-images">
           {current_card_pool.map((card: Card_Pool) => {
-            return <Card image={card.image} name={card.name} />;
+            return <CardImage image={card.image} name={card.name} />;
           })}
           <button
             className="prev"
@@ -81,12 +85,7 @@ const Decklist: React.FC = () => {
         </div>
         <div className="decklist-names">
           {current_deck.map((card: List) => {
-            return (
-              <div className="card-name">
-                <div className="count">{card.count}x</div>
-                <div className="name">{card.name}</div>
-              </div>
-            );
+            return <CardName name={card.name} count={card.count} />;
           })}
         </div>
       </div>

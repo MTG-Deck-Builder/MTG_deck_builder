@@ -16,16 +16,18 @@ interface Props {
 }
 
 const Dashboard: React.FC<Props> = ({ history }) => {
-  const { user_id, all_decks } = useSelector((state: State) => state);
+  let { user_id, all_decks } = useSelector((state: State) => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch({ type: DECKS_START });
+    if (user_id === null) {
+      user_id = Number(localStorage.getItem("user_id"));
+    }
     axios
       .get(`http://localhost:5000/user/${user_id}/decks`)
       .then((res) => {
         dispatch({ type: DECKS_SUCCESS, payload: res.data });
-        console.log(res.data);
       })
       .catch((err) => {
         dispatch({ type: DECKS_FAILURE, payload: err });
@@ -35,12 +37,10 @@ const Dashboard: React.FC<Props> = ({ history }) => {
 
   const set_current_deck_id = (id: number) => {
     dispatch({ type: SET_DECKLIST_ID, payload: id });
+    localStorage.setItem("current_deck_id", id.toString());
     history.push("/decklist");
   };
 
-  useEffect(() => {
-    console.log(all_decks);
-  }, [all_decks]);
   return (
     <div className="dashboard-container">
       <div className="deck-container">
