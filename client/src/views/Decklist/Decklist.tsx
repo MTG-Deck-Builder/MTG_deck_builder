@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { State } from "../../reducers/index";
+import Card from "../../components/Card/Card";
 import {
   DECKLIST_START,
   DECKLIST_SUCCESS,
@@ -61,7 +62,7 @@ const Decklist: React.FC = () => {
       <div className="decklist-container">
         <div className="decklist-images">
           {current_card_pool.map((card: Card_Pool) => {
-            return <img src={card.image} alt={card.name} />;
+            return <Card image={card.image} name={card.name} />;
           })}
           <button
             className="prev"
