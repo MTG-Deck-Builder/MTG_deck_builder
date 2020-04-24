@@ -13,6 +13,9 @@ export const PAGE_SUCCESS = "PAGE_SUCCESS";
 export const PAGE_FAILURE = "PAGE_FAILURE";
 export const INCREMENT_COUNT = "INCREMENT_COUNT";
 export const DECREMENT_COUNT = "DECREMENT_COUNT";
+export const DECREMENT_COUNT_START = "DECREMENT_COUNT_START";
+export const DECREMENT_COUNT_SUCCESS = "DECREMENT_COUNT_SUCCESS";
+export const DECREMENT_COUNT_FAILURE = "DECREMENT_COUNT_FAILURE";
 
 export interface State {
   username: string;
@@ -35,6 +38,7 @@ export interface List {
   count: number;
   image: string;
   name: string;
+  id: number;
 }
 
 interface Decks {
@@ -136,28 +140,39 @@ export function reducer(state: State = initialState, action: Action) {
         loading: false,
         error: action.payload.error,
       };
-    case INCREMENT_COUNT:
+    case DECREMENT_COUNT_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DECREMENT_COUNT_SUCCESS:
+      console.log("Inside decrement count success", action.payload);
       const index = state.current_deck.findIndex(
         (card) => card.name === action.payload.name
       );
-      let updated_deck;
-      if (index !== -1) {
-        const current_card = state.current_deck[index];
-        const updated_card = { ...current_card, count: current_card.count + 1 };
-        updated_deck = [...state.current_deck];
-        updated_deck.splice(index, 1, updated_card);
-      } else {
-        updated_deck = [...state.current_deck];
-        updated_deck.push({
-          name: action.payload.name,
-          count: 1,
-          image: action.payload.image,
-        });
-      }
-      return {
-        ...state,
-        current_deck: updated_deck,
-      };
+
+    // case INCREMENT_COUNT:
+    //   const index = state.current_deck.findIndex(
+    //     (card) => card.name === action.payload.name
+    //   );
+    //   let updated_deck;
+    //   if (index !== -1) {
+    //     const current_card = state.current_deck[index];
+    //     const updated_card = { ...current_card, count: current_card.count + 1 };
+    //     updated_deck = [...state.current_deck];
+    //     updated_deck.splice(index, 1, updated_card);
+    //   } else {
+    //     updated_deck = [...state.current_deck];
+    //     updated_deck.push({
+    //       name: action.payload.name,
+    //       count: 1,
+    //       image: action.payload.image,
+    //     });
+    //   }
+    //   return {
+    //     ...state,
+    //     current_deck: updated_deck,
+    //   };
     case DECREMENT_COUNT:
       const index2 = state.current_deck.findIndex(
         (card) => card.name === action.payload.name

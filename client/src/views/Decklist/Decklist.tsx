@@ -85,7 +85,9 @@ const Decklist: React.FC = () => {
         </div>
         <div className="decklist-names">
           {current_deck.map((card: List) => {
-            return <CardName name={card.name} count={card.count} />;
+            return (
+              <CardName name={card.name} count={card.count} id={card.id} />
+            );
           })}
         </div>
       </div>
