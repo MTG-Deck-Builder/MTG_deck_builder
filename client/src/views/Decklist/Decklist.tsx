@@ -11,6 +11,9 @@ import {
   PAGE_START,
   PAGE_SUCCESS,
   PAGE_FAILURE,
+  COUNT_ADJUST_START,
+  COUNT_ADJUST_SUCCESS,
+  COUNT_ADJUST_FAILURE,
   Card_Pool,
   List,
 } from "../../reducers/index";
@@ -60,13 +63,110 @@ const Decklist: React.FC = () => {
     setPage(page - 1);
   };
 
+  const adjust: any = (
+    sign: string,
+    name: string,
+    id: number,
+    count: number
+  ) => {
+    dispatch({ type: COUNT_ADJUST_START });
+    const index = current_deck.findIndex((card) => {
+      return card.name === name;
+    });
+    if (sign === "-") {
+      if (count > 1) {
+        const updated_card = {
+          name,
+          id,
+          count: count - 1,
+          sign,
+        };
+        axios
+          .put(`http://localhost:5000/decks/${current_deck_id}`, updated_card)
+          .then(() => {
+            dispatch({
+              type: COUNT_ADJUST_SUCCESS,
+              payload: { name, id, count },
+              sign,
+              index,
+            });
+          })
+          .catch((err) => {
+            dispatch({ type: COUNT_ADJUST_FAILURE, payload: err });
+          });
+      } else {
+        axios
+          .delete(`http://localhost:5000/decks/${current_deck_id}`, {
+            data: { id },
+          })
+          .then((res) => {
+            dispatch({
+              type: COUNT_ADJUST_SUCCESS,
+              payload: { name, id, count },
+              sign,
+              index,
+            });
+          })
+          .catch((err) => console.log(err));
+      }
+    }
+    if (sign === "+") {
+      if (index == -1) {
+        const add_new_card = {
+          name,
+          id,
+          count: 1,
+          sign,
+        };
+        axios
+          .post(`http://localhost:5000/decks/${current_deck_id}`, add_new_card)
+          .then(() => {
+            dispatch({
+              type: COUNT_ADJUST_SUCCESS,
+              payload: { name, id, count: 1 },
+              sign,
+              index,
+            });
+          })
+          .catch((err) => {
+            dispatch({ type: COUNT_ADJUST_FAILURE, payload: err });
+          });
+      } else {
+        const update_card = {
+          name,
+          id,
+          count: current_deck[index].count + 1,
+          sign,
+        };
+        axios
+          .put(`http://localhost:5000/decks/${current_deck_id}`, update_card)
+          .then(() => {
+            dispatch({
+              type: COUNT_ADJUST_SUCCESS,
+              payload: { name, id, count: current_deck[index].count + 1 },
+              sign,
+              index,
+            });
+          })
+          .catch((err) => console.log(err));
+      }
+    }
+  };
+
   return (
     <div className="decklist-page">
       <Navigation />
       <div className="decklist-container">
         <div className="decklist-images">
           {current_card_pool.map((card: Card_Pool) => {
-            return <CardImage image={card.image} name={card.name} />;
+            return (
+              <CardImage
+                image={card.image}
+                name={card.name}
+                id={card.id}
+                adjust={adjust}
+              />
+            );
           })}
           <button
             className="prev"
@@ -86,7 +186,12 @@ const Decklist: React.FC = () => {
         <div className="decklist-names">
           {current_deck.map((card: List) => {
             return (
-              <CardName name={card.name} count={card.count} id={card.id} />
+              <CardName
+                name={card.name}
+                count={card.count}
+                id={card.id}
+                adjust={adjust}
+              />
             );
           })}
         </div>
