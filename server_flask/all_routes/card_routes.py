@@ -22,6 +22,15 @@ def get_cards():
     result = cards_schema.dump(all_cards)
     return jsonify(result)
 
+# GET 10 CARDS via PAGINATION
+@app.route('/cards', methods=['POST'])
+def get_ten_cards():
+    page_num = request.json['page']
+    upper = page_num * 10
+    lower = upper - 9
+    cards = Card.query.filter(Card.id >= lower).filter(Card.id <= upper)
+    return cards_schema.jsonify(cards)
+
 # GET CARD BY ID
 @app.route('/card/<id>', methods=['GET'])
 def get_card(id):

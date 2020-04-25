@@ -14,8 +14,8 @@ import {
 } from "../../reducers/index";
 
 interface Creds {
-  email?: string;
-  password?: string;
+  email: string;
+  password: string;
 }
 
 interface Props {
@@ -27,6 +27,8 @@ const LoginForm: React.FC<Props> = ({ history }) => {
     email: "",
     password: "",
   });
+  const [validEmail, setValidEmail] = useState<Boolean>(true);
+  const email_regex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
 
   const dispatch = useDispatch();
 
@@ -36,14 +38,28 @@ const LoginForm: React.FC<Props> = ({ history }) => {
 
   const login = async (e: any) => {
     e.preventDefault();
-    dispatch({ type: LOGIN_START });
-    const res = await axios.post("http://localhost:5000/login", credentials);
-    if (res.data.token) {
-      dispatch({ type: LOGIN_SUCCESS, payload: res.data });
-      localStorage.setItem("token", res.data.token);
-      history.push("/dashboard");
+    if (email_regex.test(credentials.email)) {
+      setValidEmail(true);
+      dispatch({ type: LOGIN_START });
+      try {
+        const res = await axios.post(
+          "http://localhost:5000/login",
+          credentials
+        );
+        if (res.data.token) {
+          dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+          console.log(res.data);
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("user_id", res.data.user_id);
+          history.push("/dashboard");
+        } else {
+          dispatch({ type: LOGIN_FAILURE, payload: res.data });
+        }
+      } catch (err) {
+        console.log(err);
+      }
     } else {
-      dispatch({ type: LOGIN_FAILURE, payload: res.data });
+      setValidEmail(false);
     }
   };
 
@@ -56,6 +72,13 @@ const LoginForm: React.FC<Props> = ({ history }) => {
         value={credentials.email}
         onChange={handleChange}
       />
+      {!validEmail ? (
+        <p style={{ color: "red", background: "blue", fontSize: "2rem" }}>
+          Please enter a valid email address
+        </p>
+      ) : (
+        <p></p>
+      )}
       <input
         type="password"
         name="password"

@@ -1,6 +1,6 @@
 // packages
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 // modules
 import Login from "./views/Login/Login";
@@ -11,9 +11,11 @@ import "./App.scss";
 function App() {
   return (
     <>
-      <Route exact path="/" component={Login} />
-      <Route path="/dashboard" component={Dashboard} />
-      <Route path="/decklist" component={Decklist} />
+      <Switch>
+        <Route exact path="/" component={Login} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/decklist" component={Decklist} />
+      </Switch>
     </>
   );
 }

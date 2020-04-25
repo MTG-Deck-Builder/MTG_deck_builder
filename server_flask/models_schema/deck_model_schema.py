@@ -26,10 +26,11 @@ class Deck(db.Model):
 
 class DeckCardSchema(ma.Schema):
     class Meta:
-        fields = ('name', 'image', 'count')
+        fields = ('name', 'image', 'count', 'id')
 
 
-deck_card_schema = DeckCardSchema(many=True)
+deck_card_schema = DeckCardSchema()
+deck_cards_schema = DeckCardSchema(many=True)
 
 
 class DeckSchema(ma.Schema):

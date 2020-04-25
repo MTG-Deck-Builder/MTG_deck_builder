@@ -8,6 +8,12 @@ export const DECKLIST_START = "DECKLIST_START";
 export const DECKLIST_SUCCESS = "DECKLIST_SUCCESS";
 export const DECKLIST_FAILURE = "DECKLIST_FAILURE";
 export const SET_DECKLIST_ID = "SET_DECKLIST_ID";
+export const PAGE_START = "PAGE_START";
+export const PAGE_SUCCESS = "PAGE_SUCCESS";
+export const PAGE_FAILURE = "PAGE_FAILURE";
+export const COUNT_ADJUST_START = "COUNT_ADJUST_START";
+export const COUNT_ADJUST_SUCCESS = "COUNT_ADJUST_SUCCESS";
+export const COUNT_ADJUST_FAILURE = "COUNT_ADJUST_FAILURE";
 
 export interface State {
   username: string;
@@ -17,12 +23,20 @@ export interface State {
   all_decks: Decks[];
   current_deck: List[];
   current_deck_id: number | null;
+  current_card_pool: Card_Pool[];
+}
+
+export interface Card_Pool {
+  id: number;
+  image: string;
+  name: string;
 }
 
 export interface List {
   count: number;
   image: string;
   name: string;
+  id: number;
 }
 
 interface Decks {
@@ -34,6 +48,8 @@ interface Decks {
 export interface Action {
   type: string;
   payload: any;
+  sign: string;
+  index: number;
 }
 
 const initialState: State = {
@@ -44,6 +60,7 @@ const initialState: State = {
   all_decks: [],
   current_deck: [],
   current_deck_id: null,
+  current_card_pool: [],
 };
 
 export function reducer(state: State = initialState, action: Action) {
@@ -105,6 +122,79 @@ export function reducer(state: State = initialState, action: Action) {
       return {
         ...state,
         current_deck_id: action.payload,
+      };
+    case PAGE_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case PAGE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        current_card_pool: action.payload,
+      };
+    case PAGE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+    case COUNT_ADJUST_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case COUNT_ADJUST_SUCCESS:
+      if (action.sign === "-") {
+        if (action.payload.count > 1) {
+          const updated_deck = [...state.current_deck];
+          updated_deck[action.index].count = action.payload.count - 1;
+          return {
+            ...state,
+            loading: false,
+            current_deck: updated_deck,
+          };
+        } else {
+          return {
+            ...state,
+            loading: false,
+            current_deck: state.current_deck.filter((card) => {
+              return card.name !== action.payload.name;
+            }),
+          };
+        }
+      }
+      if (action.sign === "+") {
+        if (action.index == -1) {
+          const updated_deck = [
+            ...state.current_deck,
+            {
+              name: action.payload.name,
+              id: action.payload.id,
+              count: action.payload.count,
+            },
+          ];
+          return {
+            ...state,
+            loading: false,
+            current_deck: updated_deck,
+          };
+        } else {
+          const updated_deck = [...state.current_deck];
+          updated_deck[action.index].count =
+            updated_deck[action.index].count + 1;
+          return {
+            ...state,
+            loading: false,
+            current_deck: updated_deck,
+          };
+        }
+      }
+    case COUNT_ADJUST_FAILURE:
+      return {
+        ...state,
+        error: action.payload.err,
       };
     default:
       return { ...state };

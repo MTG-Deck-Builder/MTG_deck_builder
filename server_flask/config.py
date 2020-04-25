@@ -7,7 +7,7 @@ import os
 
 # Initialize our app
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources=r'/*')
 Talisman(app)
 basedir = os.path.abspath(os.path.dirname(__file__))
 
