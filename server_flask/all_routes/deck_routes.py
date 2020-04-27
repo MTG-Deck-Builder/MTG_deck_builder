@@ -27,7 +27,7 @@ def add_deck(id):
 @app.route('/decks/<id>', methods=['GET'])
 def get_deck_by_id(id):
     cards_for_deck = Card.query.join(Deck_Cards, Card.id == Deck_Cards.card_id).add_columns(
-        Deck_Cards.count, Card.name, Card.image, Card.id).filter(Deck_Cards.deck_id == id)
+        Deck_Cards.count, Card.name, Card.id).filter(Deck_Cards.deck_id == id)
     return deck_cards_schema.jsonify(cards_for_deck)
 
 # UPDATE A COUNT OF A PARTICULAR CARD WITHIN A DECKLIST BY DECKID/CARDID

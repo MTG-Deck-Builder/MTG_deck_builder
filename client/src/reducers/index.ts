@@ -1,70 +1,121 @@
-export const LOGIN_START = "LOGIN_START";
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-export const LOGIN_FAILURE = "LOGIN_FAILURE";
-export const DECKS_START = "DECKS_START";
-export const DECKS_SUCCESS = "DECKS_SUCCESS";
-export const DECKS_FAILURE = "DECKS_FAILURE";
-export const DECKLIST_START = "DECKLIST_START";
-export const DECKLIST_SUCCESS = "DECKLIST_SUCCESS";
-export const DECKLIST_FAILURE = "DECKLIST_FAILURE";
-export const SET_DECKLIST_ID = "SET_DECKLIST_ID";
-export const PAGE_START = "PAGE_START";
-export const PAGE_SUCCESS = "PAGE_SUCCESS";
-export const PAGE_FAILURE = "PAGE_FAILURE";
-export const COUNT_ADJUST_START = "COUNT_ADJUST_START";
-export const COUNT_ADJUST_SUCCESS = "COUNT_ADJUST_SUCCESS";
-export const COUNT_ADJUST_FAILURE = "COUNT_ADJUST_FAILURE";
+import {
+  LOGIN_START,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  FETCH_ALL_DECKS_OF_USER_START,
+  FETCH_ALL_DECKS_OF_USER_SUCCESS,
+  FETCH_ALL_DECKS_OF_USER_FAILURE,
+  FETCH_CURRENT_DECK_START,
+  FETCH_CURRENT_DECK_SUCCESS,
+  FETCH_CURRENT_DECK_FAILURE,
+  FETCH_NEXT_CARD_POOL_START,
+  FETCH_NEXT_CARD_POOL_SUCCESS,
+  FETCH_NEXT_CARD_POOL_FAILURE,
+  DECREMENT_CARD_START,
+  DECREMENT_CARD_SUCCESS,
+  DECREMENT_CARD_FAILURE,
+  REMOVE_CARD_START,
+  REMOVE_CARD_SUCCESS,
+  REMOVE_CARD_FAILURE,
+  ADD_NEW_CARD_START,
+  ADD_NEW_CARD_SUCCESS,
+  ADD_NEW_CARD_FAILURE,
+  INCREMENT_CARD_START,
+  INCREMENT_CARD_SUCCESS,
+  INCREMENT_CARD_FAILURE,
+  SET_DECKLIST_ID,
+} from "../actionTypes/index";
 
-export interface State {
-  username: string;
-  user_id: number | null;
-  loading: boolean;
-  error: boolean | string;
-  all_decks: Decks[];
-  current_deck: List[];
-  current_deck_id: number | null;
-  current_card_pool: Card_Pool[];
-}
-
-export interface Card_Pool {
-  id: number;
-  image: string;
-  name: string;
-}
-
-export interface List {
-  count: number;
-  image: string;
-  name: string;
-  id: number;
-}
-
-interface Decks {
-  deck_name: string;
-  id: number;
-  user_id: number;
-}
-
-export interface Action {
-  type: string;
-  payload: any;
-  sign: string;
-  index: number;
-}
+import { State, Action } from "../typescriptInterfaces/typescriptInterfaces";
 
 const initialState: State = {
   username: "",
-  user_id: null,
+  userId: null,
   loading: false,
   error: false,
-  all_decks: [],
-  current_deck: [],
-  current_deck_id: null,
-  current_card_pool: [],
+  allDecks: [],
+  currentDeck: [],
+  currentDeckId: null,
+  currentCardPool: [],
 };
 
 export function reducer(state: State = initialState, action: Action) {
   switch (action.type) {
+    case DECREMENT_CARD_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DECREMENT_CARD_SUCCESS:
+      const updatedDeck = [...state.currentDeck];
+      updatedDeck[action.payload.indexOfCard] = action.payload.updatedCard;
+      return {
+        ...state,
+        loading: false,
+        currentDeck: updatedDeck,
+      };
+    case DECREMENT_CARD_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case REMOVE_CARD_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case REMOVE_CARD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        currentDeck: state.currentDeck.filter(
+          (card) => card.name !== action.payload.cardToRemove.name
+        ),
+      };
+    case REMOVE_CARD_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case ADD_NEW_CARD_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ADD_NEW_CARD_SUCCESS:
+      return {
+        ...state,
+        loading: true,
+        currentDeck: [...state.currentDeck, action.payload],
+      };
+    case ADD_NEW_CARD_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case INCREMENT_CARD_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case INCREMENT_CARD_SUCCESS:
+      console.log("This is the action.payload: ", action.payload);
+      const changedDeck = [...state.currentDeck];
+      changedDeck[action.payload.indexOfCard] = action.payload.updatedCard;
+      return {
+        ...state,
+        loading: false,
+        currentDeck: changedDeck,
+      };
+    case INCREMENT_CARD_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
     case LOGIN_START:
       return {
         ...state,
@@ -75,7 +126,7 @@ export function reducer(state: State = initialState, action: Action) {
         ...state,
         loading: false,
         username: action.payload.username,
-        user_id: action.payload.user_id,
+        userId: action.payload.user_id,
         error: false,
       };
     case LOGIN_FAILURE:
@@ -84,35 +135,35 @@ export function reducer(state: State = initialState, action: Action) {
         loading: false,
         error: action.payload.error,
       };
-    case DECKS_START:
+    case FETCH_ALL_DECKS_OF_USER_START:
       return {
         ...state,
         loading: true,
       };
-    case DECKS_SUCCESS:
+    case FETCH_ALL_DECKS_OF_USER_SUCCESS:
       return {
         ...state,
         loading: false,
-        all_decks: action.payload,
+        allDecks: action.payload,
       };
-    case DECKS_FAILURE:
+    case FETCH_ALL_DECKS_OF_USER_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload.error,
       };
-    case DECKLIST_START:
+    case FETCH_CURRENT_DECK_START:
       return {
         ...state,
         loading: true,
       };
-    case DECKLIST_SUCCESS:
+    case FETCH_CURRENT_DECK_SUCCESS:
       return {
         ...state,
         loading: false,
-        current_deck: action.payload,
+        currentDeck: action.payload,
       };
-    case DECKLIST_FAILURE:
+    case FETCH_CURRENT_DECK_FAILURE:
       return {
         ...state,
         loading: false,
@@ -121,80 +172,24 @@ export function reducer(state: State = initialState, action: Action) {
     case SET_DECKLIST_ID:
       return {
         ...state,
-        current_deck_id: action.payload,
+        currentDeckId: action.payload,
       };
-    case PAGE_START:
+    case FETCH_NEXT_CARD_POOL_START:
       return {
         ...state,
         loading: true,
       };
-    case PAGE_SUCCESS:
+    case FETCH_NEXT_CARD_POOL_SUCCESS:
       return {
         ...state,
         loading: false,
-        current_card_pool: action.payload,
+        currentCardPool: action.payload,
       };
-    case PAGE_FAILURE:
+    case FETCH_NEXT_CARD_POOL_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload.error,
-      };
-    case COUNT_ADJUST_START:
-      return {
-        ...state,
-        loading: true,
-      };
-    case COUNT_ADJUST_SUCCESS:
-      if (action.sign === "-") {
-        if (action.payload.count > 1) {
-          const updated_deck = [...state.current_deck];
-          updated_deck[action.index].count = action.payload.count - 1;
-          return {
-            ...state,
-            loading: false,
-            current_deck: updated_deck,
-          };
-        } else {
-          return {
-            ...state,
-            loading: false,
-            current_deck: state.current_deck.filter((card) => {
-              return card.name !== action.payload.name;
-            }),
-          };
-        }
-      }
-      if (action.sign === "+") {
-        if (action.index == -1) {
-          const updated_deck = [
-            ...state.current_deck,
-            {
-              name: action.payload.name,
-              id: action.payload.id,
-              count: action.payload.count,
-            },
-          ];
-          return {
-            ...state,
-            loading: false,
-            current_deck: updated_deck,
-          };
-        } else {
-          const updated_deck = [...state.current_deck];
-          updated_deck[action.index].count =
-            updated_deck[action.index].count + 1;
-          return {
-            ...state,
-            loading: false,
-            current_deck: updated_deck,
-          };
-        }
-      }
-    case COUNT_ADJUST_FAILURE:
-      return {
-        ...state,
-        error: action.payload.err,
       };
     default:
       return { ...state };

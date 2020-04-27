@@ -11,7 +11,7 @@ import {
   LOGIN_START,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-} from "../../reducers/index";
+} from "../../actionTypes/index";
 
 interface Creds {
   email: string;
@@ -50,7 +50,7 @@ const LoginForm: React.FC<Props> = ({ history }) => {
           dispatch({ type: LOGIN_SUCCESS, payload: res.data });
           console.log(res.data);
           localStorage.setItem("token", res.data.token);
-          localStorage.setItem("user_id", res.data.user_id);
+          localStorage.setItem("userId", res.data.user_id);
           history.push("/dashboard");
         } else {
           dispatch({ type: LOGIN_FAILURE, payload: res.data });

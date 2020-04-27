@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { State } from "../../reducers/index";
+import { State } from "../../typescriptInterfaces/typescriptInterfaces";
 import {
-  DECKS_START,
-  DECKS_SUCCESS,
-  DECKS_FAILURE,
+  FETCH_ALL_DECKS_OF_USER_START,
+  FETCH_ALL_DECKS_OF_USER_SUCCESS,
+  FETCH_ALL_DECKS_OF_USER_FAILURE,
   SET_DECKLIST_ID,
-} from "../../reducers/index";
+} from "../../actionTypes/index";
 import "./dashboard.scss";
 import { withRouter } from "react-router";
 
@@ -16,37 +16,34 @@ interface Props {
 }
 
 const Dashboard: React.FC<Props> = ({ history }) => {
-  let { user_id, all_decks } = useSelector((state: State) => state);
+  const userId = useSelector((state: State) => state.userId);
+  const allDecks = useSelector((state: State) => state.allDecks);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: DECKS_START });
-    if (user_id === null) {
-      user_id = Number(localStorage.getItem("user_id"));
-    }
+    dispatch({ type: FETCH_ALL_DECKS_OF_USER_START });
     axios
-      .get(`http://localhost:5000/user/${user_id}/decks`)
+      .get(`http://localhost:5000/user/${userId}/decks`)
       .then((res) => {
-        dispatch({ type: DECKS_SUCCESS, payload: res.data });
+        dispatch({ type: FETCH_ALL_DECKS_OF_USER_SUCCESS, payload: res.data });
       })
       .catch((err) => {
-        dispatch({ type: DECKS_FAILURE, payload: err });
+        dispatch({ type: FETCH_ALL_DECKS_OF_USER_FAILURE, payload: err });
         console.log(err);
       });
   }, []);
 
-  const set_current_deck_id = (id: number) => {
+  const setCurrentDeckId = (id: number) => {
     dispatch({ type: SET_DECKLIST_ID, payload: id });
-    localStorage.setItem("current_deck_id", id.toString());
     history.push("/decklist");
   };
 
   return (
     <div className="dashboard-container">
       <div className="deck-container">
-        {all_decks.map((deck) => (
-          <div className="deck" onClick={() => set_current_deck_id(deck.id)}>
-            {deck.deck_name}
+        {allDecks.map(({ id, deck_name: deckName }) => (
+          <div className="deck" onClick={() => setCurrentDeckId(id)}>
+            {deckName}
           </div>
         ))}
       </div>

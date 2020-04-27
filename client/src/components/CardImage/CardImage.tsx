@@ -1,14 +1,31 @@
 import React from "react";
+import { CardInPool } from "../../typescriptInterfaces/typescriptInterfaces";
 
 interface Props {
-  name: string;
-  image: string;
-  id: number;
-  adjust: any;
+  card: CardInPool;
+  addCardToDeck: any;
+  incrementCard: any;
+  checkIfCardExistsInDeck: any;
 }
 
-const CardImage: React.FC<Props> = ({ name, image, id, adjust }) => {
-  return <img src={image} alt={name} onClick={() => adjust("+", name, id)} />;
+const CardImage: React.FC<Props> = ({
+  card,
+  addCardToDeck,
+  incrementCard,
+  checkIfCardExistsInDeck,
+}) => {
+  const { image, name } = card;
+  return (
+    <img
+      src={image}
+      alt={name}
+      onClick={
+        checkIfCardExistsInDeck(name)
+          ? () => incrementCard(card)
+          : addCardToDeck(card)
+      }
+    />
+  );
 };
 
 export default CardImage;
