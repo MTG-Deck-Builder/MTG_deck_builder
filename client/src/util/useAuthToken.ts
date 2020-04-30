@@ -6,11 +6,7 @@ type Token = {
 }
 
 const useAuthToken = () => {
-  const [token, setToken] = useState<string | null>();
-  
-  useEffect(() => {
-    setToken(localStorage.getItem('token'))
-  }, []);
+  const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
 
   const deleteToken = () => {
     localStorage.removeItem('token');
