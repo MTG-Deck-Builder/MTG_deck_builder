@@ -1,8 +1,11 @@
-.decklist-page {
+.deckbuilder-page {
   width: 100%;
-  .decklist-container {
+  height: 100vh;
+  .deckbuilder-container {
     display: flex;
-    .decklist-images {
+    .deckbuilder-images {
+      background-image: url("/mtg_landscape.jpg");
+      background-size: cover;
       max-width: 69%;
       width: 100%;
       button {
@@ -18,9 +21,10 @@
         }
       }
     }
-    .decklist-names {
+    .deckbuilder-names {
       border: 1px solid black;
       width: 31%;
+      overflow-y: auto;
       .card-name {
         width: 100%;
         height: 50px;

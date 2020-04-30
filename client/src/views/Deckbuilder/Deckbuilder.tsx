@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useDeckUtils } from "../../util/deckUtils";
+import { useDeckUtils } from "../../util/useDeckUtils";
 import CardImage from "../../components/CardImage/CardImage";
 import CardName from "../../components/CardName/CardName";
 import Navigation from "../../components/Navigation/Navigation";
-import "./decklist.scss";
+import "./deckbuilder.scss";
 
-const Decklist: React.FC = () => {
+const Deckbuilder: React.FC = () => {
   const {
     fetchNextCardPool,
     addCardToDeck,
@@ -24,7 +24,6 @@ const Decklist: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log("fetching new page...", page);
     fetchNextCardPool(page);
   }, [page]);
 
@@ -38,10 +37,10 @@ const Decklist: React.FC = () => {
   };
 
   return (
-    <div className="decklist-page">
+    <div className="deckbuilder-page">
       <Navigation />
-      <div className="decklist-container">
-        <div className="decklist-images">
+      <div className="deckbuilder-container">
+        <div className="deckbuilder-images">
           {currentCardPool.map((card) => {
             return (
               <CardImage
@@ -67,7 +66,7 @@ const Decklist: React.FC = () => {
             Next
           </button>
         </div>
-        <div className="decklist-names">
+        <div className="deckbuilder-names">
           {currentDeck.map((card) => {
             return (
               <CardName
@@ -83,4 +82,4 @@ const Decklist: React.FC = () => {
   );
 };
 
-export default Decklist;
+export default Deckbuilder;

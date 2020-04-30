@@ -35,7 +35,7 @@ const Dashboard: React.FC<Props> = ({ history }) => {
 
   const setCurrentDeckId = (id: number) => {
     dispatch({ type: SET_DECKLIST_ID, payload: id });
-    history.push("/decklist");
+    history.push("/deckbuilder");
   };
 
   return (
