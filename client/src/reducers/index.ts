@@ -1,6 +1,6 @@
 import * as actions from "../actionTypes/index";
 
-import { State, Action } from "../typescriptInterfaces/typescriptInterfaces";
+import { State, Action } from "../@types/typescriptInterfaces";
 
 const initialState: State = {
   username: "",

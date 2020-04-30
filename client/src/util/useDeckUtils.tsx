@@ -4,7 +4,7 @@ import {
   State,
   CardInPool,
   CardInDeck,
-} from "../typescriptInterfaces/typescriptInterfaces";
+} from "../@types/typescriptInterfaces";
 import {
   INCREMENT_CARD_START,
   INCREMENT_CARD_SUCCESS,

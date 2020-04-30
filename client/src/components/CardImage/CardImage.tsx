@@ -1,5 +1,5 @@
 import React from "react";
-import { CardInPool } from "../../typescriptInterfaces/typescriptInterfaces";
+import { CardInPool } from "../../@types/typescriptInterfaces";
 
 interface Props {
   card: CardInPool;

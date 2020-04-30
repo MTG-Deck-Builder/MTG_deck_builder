@@ -21,10 +21,12 @@ const Deckbuilder: React.FC = () => {
 
   useEffect(() => {
     fetchCurrentDeck();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     fetchNextCardPool(page);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   const next = (e: any) => {

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { State } from "../../typescriptInterfaces/typescriptInterfaces";
+import { State } from "../../@types/typescriptInterfaces";
 import {
   FETCH_ALL_DECKS_OF_USER_START,
   FETCH_ALL_DECKS_OF_USER_SUCCESS,
@@ -9,13 +9,9 @@ import {
   SET_DECKLIST_ID,
 } from "../../actionTypes/index";
 import "./dashboard.scss";
-import { withRouter } from "react-router";
+import { RouteComponentProps } from "react-router";
 
-interface Props {
-  history: any;
-}
-
-const Dashboard: React.FC<Props> = ({ history }) => {
+const Dashboard: React.FC<RouteComponentProps> = ({ history }) => {
   const userId = useSelector((state: State) => state.userId);
   const allDecks = useSelector((state: State) => state.allDecks);
   const dispatch = useDispatch();
@@ -31,7 +27,7 @@ const Dashboard: React.FC<Props> = ({ history }) => {
         dispatch({ type: FETCH_ALL_DECKS_OF_USER_FAILURE, payload: err });
         console.log(err);
       });
-  }, []);
+  }, [dispatch, userId]);
 
   const setCurrentDeckId = (id: number) => {
     dispatch({ type: SET_DECKLIST_ID, payload: id });
@@ -51,4 +47,4 @@ const Dashboard: React.FC<Props> = ({ history }) => {
   );
 };
 
-export default withRouter(Dashboard);
+export default Dashboard;

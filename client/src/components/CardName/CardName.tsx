@@ -1,5 +1,5 @@
 import React from "react";
-import { CardInDeck } from "../../typescriptInterfaces/typescriptInterfaces";
+import { CardInDeck } from "../../@types/typescriptInterfaces";
 
 interface Props {
   card: CardInDeck;
@@ -20,7 +20,11 @@ const CardName: React.FC<Props> = ({
         count > 1 ? () => decrementCard(card) : () => removeCardFromDeck(card)
       }
     >
-      <div className="count">{count}x</div>
+
+      <div className="count">
+        <div className="count-shape" />
+        <div className="count-text">{count}x</div>
+      </div>
       <div className="name">{name}</div>
     </div>
   );

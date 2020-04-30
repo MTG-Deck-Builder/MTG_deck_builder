@@ -36,10 +36,25 @@
         display: flex;
         align-items: center;
         .count {
-          font-size: 2rem;
-          color: white;
-          background: black;
-          margin: 10px;
+          position: relative;
+          .count-shape {
+            clip-path: polygon(25% 0%, 100% 1%, 100% 100%, 25% 100%, 0% 50%);
+            shape-outside: polygon(25% 0%, 100% 1%, 100% 100%, 25% 100%, 0% 50%);
+            position: absolute;
+            width: 35px;
+            height: 38px;
+            z-index: 99;
+            border: 3px solid white;
+            background: transparent;
+            opacity: 1;
+          }
+          .count-text {
+            font-size: 2rem;
+            color: white;
+            background: transparent;
+            margin: 10px;
+            opacity: 1;
+          }
         }
         .name {
           font-size: 2rem;
