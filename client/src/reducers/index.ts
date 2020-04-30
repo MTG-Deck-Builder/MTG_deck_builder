@@ -70,7 +70,7 @@ export function reducer(state: State = initialState, action: Action) {
         ...state,
         loading: false,
         currentDeck: state.currentDeck.filter(
-          (card) => card.name !== action.payload.cardToRemove.name
+          (card) => card.name !== action.payload.name
         ),
       };
     case REMOVE_CARD_FAILURE:

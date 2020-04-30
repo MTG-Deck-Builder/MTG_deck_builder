@@ -22,7 +22,7 @@ const CardImage: React.FC<Props> = ({
       onClick={
         checkIfCardExistsInDeck(name)
           ? () => incrementCard(card)
-          : addCardToDeck(card)
+          : () => addCardToDeck(card)
       }
     />
   );
