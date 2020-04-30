@@ -1,4 +1,6 @@
 .decklist-page {
+  height: 100vh;
+  overflow: auto;
   width: 100%;
   .decklist-container {
     display: flex;

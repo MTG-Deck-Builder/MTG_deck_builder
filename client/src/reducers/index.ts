@@ -1,30 +1,4 @@
-import {
-  LOGIN_START,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-  FETCH_ALL_DECKS_OF_USER_START,
-  FETCH_ALL_DECKS_OF_USER_SUCCESS,
-  FETCH_ALL_DECKS_OF_USER_FAILURE,
-  FETCH_CURRENT_DECK_START,
-  FETCH_CURRENT_DECK_SUCCESS,
-  FETCH_CURRENT_DECK_FAILURE,
-  FETCH_NEXT_CARD_POOL_START,
-  FETCH_NEXT_CARD_POOL_SUCCESS,
-  FETCH_NEXT_CARD_POOL_FAILURE,
-  DECREMENT_CARD_START,
-  DECREMENT_CARD_SUCCESS,
-  DECREMENT_CARD_FAILURE,
-  REMOVE_CARD_START,
-  REMOVE_CARD_SUCCESS,
-  REMOVE_CARD_FAILURE,
-  ADD_NEW_CARD_START,
-  ADD_NEW_CARD_SUCCESS,
-  ADD_NEW_CARD_FAILURE,
-  INCREMENT_CARD_START,
-  INCREMENT_CARD_SUCCESS,
-  INCREMENT_CARD_FAILURE,
-  SET_DECKLIST_ID,
-} from "../actionTypes/index";
+import * as actions from "../actionTypes/index";
 
 import { State, Action } from "../typescriptInterfaces/typescriptInterfaces";
 
@@ -41,12 +15,12 @@ const initialState: State = {
 
 export function reducer(state: State = initialState, action: Action) {
   switch (action.type) {
-    case DECREMENT_CARD_START:
+    case actions.DECREMENT_CARD_START:
       return {
         ...state,
         loading: true,
       };
-    case DECREMENT_CARD_SUCCESS:
+    case actions.DECREMENT_CARD_SUCCESS:
       const updatedDeck = [...state.currentDeck];
       updatedDeck[action.payload.indexOfCard] = action.payload.updatedCard;
       return {
@@ -54,18 +28,18 @@ export function reducer(state: State = initialState, action: Action) {
         loading: false,
         currentDeck: updatedDeck,
       };
-    case DECREMENT_CARD_FAILURE:
+    case actions.DECREMENT_CARD_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
-    case REMOVE_CARD_START:
+    case actions.REMOVE_CARD_START:
       return {
         ...state,
         loading: true,
       };
-    case REMOVE_CARD_SUCCESS:
+    case actions.REMOVE_CARD_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -73,35 +47,35 @@ export function reducer(state: State = initialState, action: Action) {
           (card) => card.name !== action.payload.name
         ),
       };
-    case REMOVE_CARD_FAILURE:
+    case actions.REMOVE_CARD_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
-    case ADD_NEW_CARD_START:
+    case actions.ADD_NEW_CARD_START:
       return {
         ...state,
         loading: true,
       };
-    case ADD_NEW_CARD_SUCCESS:
+    case actions.ADD_NEW_CARD_SUCCESS:
       return {
         ...state,
         loading: true,
         currentDeck: [...state.currentDeck, action.payload],
       };
-    case ADD_NEW_CARD_FAILURE:
+    case actions.ADD_NEW_CARD_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
-    case INCREMENT_CARD_START:
+    case actions.INCREMENT_CARD_START:
       return {
         ...state,
         loading: true,
       };
-    case INCREMENT_CARD_SUCCESS:
+    case actions.INCREMENT_CARD_SUCCESS:
       console.log("This is the action.payload: ", action.payload);
       const changedDeck = [...state.currentDeck];
       changedDeck[action.payload.indexOfCard] = action.payload.updatedCard;
@@ -110,18 +84,18 @@ export function reducer(state: State = initialState, action: Action) {
         loading: false,
         currentDeck: changedDeck,
       };
-    case INCREMENT_CARD_FAILURE:
+    case actions.INCREMENT_CARD_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
-    case LOGIN_START:
+    case actions.LOGIN_START:
       return {
         ...state,
         loading: true,
       };
-    case LOGIN_SUCCESS:
+    case actions.LOGIN_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -129,63 +103,63 @@ export function reducer(state: State = initialState, action: Action) {
         userId: action.payload.user_id,
         error: false,
       };
-    case LOGIN_FAILURE:
+    case actions.LOGIN_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload.error,
       };
-    case FETCH_ALL_DECKS_OF_USER_START:
+    case actions.FETCH_ALL_DECKS_OF_USER_START:
       return {
         ...state,
         loading: true,
       };
-    case FETCH_ALL_DECKS_OF_USER_SUCCESS:
+    case actions.FETCH_ALL_DECKS_OF_USER_SUCCESS:
       return {
         ...state,
         loading: false,
         allDecks: action.payload,
       };
-    case FETCH_ALL_DECKS_OF_USER_FAILURE:
+    case actions.FETCH_ALL_DECKS_OF_USER_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload.error,
       };
-    case FETCH_CURRENT_DECK_START:
+    case actions.FETCH_CURRENT_DECK_START:
       return {
         ...state,
         loading: true,
       };
-    case FETCH_CURRENT_DECK_SUCCESS:
+    case actions.FETCH_CURRENT_DECK_SUCCESS:
       return {
         ...state,
         loading: false,
         currentDeck: action.payload,
       };
-    case FETCH_CURRENT_DECK_FAILURE:
+    case actions.FETCH_CURRENT_DECK_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload.error,
       };
-    case SET_DECKLIST_ID:
+    case actions.SET_DECKLIST_ID:
       return {
         ...state,
         currentDeckId: action.payload,
       };
-    case FETCH_NEXT_CARD_POOL_START:
+    case actions.FETCH_NEXT_CARD_POOL_START:
       return {
         ...state,
         loading: true,
       };
-    case FETCH_NEXT_CARD_POOL_SUCCESS:
+    case actions.FETCH_NEXT_CARD_POOL_SUCCESS:
       return {
         ...state,
         loading: false,
         currentCardPool: action.payload,
       };
-    case FETCH_NEXT_CARD_POOL_FAILURE:
+    case actions.FETCH_NEXT_CARD_POOL_FAILURE:
       return {
         ...state,
         loading: false,
