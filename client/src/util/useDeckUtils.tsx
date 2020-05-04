@@ -1,10 +1,6 @@
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  State,
-  CardInPool,
-  CardInDeck,
-} from "../@types/typescriptInterfaces";
+import { State, CardInPool, CardInDeck } from "../@types/typescriptInterfaces";
 import {
   INCREMENT_CARD_START,
   INCREMENT_CARD_SUCCESS,
@@ -28,6 +24,7 @@ import {
 
 export const useDeckUtils = () => {
   const dispatch = useDispatch();
+  const loading = useSelector((state: State) => state.loading);
   const currentDeck = useSelector((state: State) => state.currentDeck);
   const currentDeckId = useSelector((state: State) => state.currentDeckId);
   const currentCardPool = useSelector((state: State) => state.currentCardPool);
@@ -162,5 +159,6 @@ export const useDeckUtils = () => {
     checkIfCardExistsInDeck,
     currentDeck,
     currentCardPool,
+    loading,
   };
 };
