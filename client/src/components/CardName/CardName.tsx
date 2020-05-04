@@ -20,11 +20,7 @@ const CardName: React.FC<Props> = ({
         count > 1 ? () => decrementCard(card) : () => removeCardFromDeck(card)
       }
     >
-
-      <div className="count">
-        <div className="count-shape" />
-        <div className="count-text">{count}x</div>
-      </div>
+      <div className="count">{count}x</div>
       <div className="name">{name}</div>
     </div>
   );
