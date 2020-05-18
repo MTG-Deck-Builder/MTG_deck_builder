@@ -35,8 +35,9 @@ const Dashboard: React.FC<RouteComponentProps> = ({ history }) => {
   };
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-page">
       <div className="deck-container">
+        <div className="deck add-deck">+</div>
         {allDecks.map(({ id, deck_name: deckName }) => (
           <div className="deck" onClick={() => setCurrentDeckId(id)}>
             {deckName}

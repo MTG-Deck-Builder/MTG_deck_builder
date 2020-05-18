@@ -1,6 +1,16 @@
-.dashboard-container {
+.dashboard-page {
   width: 100%;
+  height: 100vh;
+  background-image: url("/gatecrash_land.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   .deck-container {
+    display: flex;
+    height: 70%;
+    width: 80%;
     .deck {
       display: flex;
       justify-content: center;
@@ -8,10 +18,17 @@
       font-size: 2rem;
       width: 200px;
       height: 200px;
-      border: 2px solid black;
+      border: 2px solid white;
+      color: white;
+      background-color: black;
+      border-radius: 10px;
+      margin-right: 20px;
       &:hover {
         cursor: pointer;
       }
+    }
+    .add-deck {
+      font-size: 5rem;
     }
   }
 }
