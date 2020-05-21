@@ -166,6 +166,23 @@ export function reducer(state: State = initialState, action: Action) {
         loading: false,
         error: action.payload.error,
       };
+    case actions.ADD_NEW_DECK_START:
+      return {
+        ...state,
+        loading: true
+      }
+    case actions.ADD_NEW_DECK_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        currentDeckId: action.payload.id
+      }
+    case actions.ADD_NEW_DECK_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      }
     default:
       return { ...state };
   }

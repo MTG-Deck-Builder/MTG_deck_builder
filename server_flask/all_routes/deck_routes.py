@@ -15,9 +15,8 @@ def get_decks(id):
 def add_deck(id):
     deck_name = request.json['deck_name']
     user_id = request.json['user_id']
-    createdAt = request.json['createdAt']
 
-    added_deck = Deck(deck_name, createdAt, user_id)
+    added_deck = Deck(deck_name=deck_name, user_id=user_id)
     db.session.add(added_deck)
     db.session.commit()
 
