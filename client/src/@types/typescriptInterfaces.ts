@@ -2,6 +2,7 @@ export interface State {
   username: string;
   userId: number | null;
   loading: boolean;
+  loadingList: boolean;
   error: boolean | string;
   allDecks: Deck[];
   currentDeck: CardInDeck[];

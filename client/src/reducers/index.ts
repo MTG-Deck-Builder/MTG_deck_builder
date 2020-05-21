@@ -6,6 +6,7 @@ const initialState: State = {
   username: "",
   userId: null,
   loading: false,
+  loadingList: false,
   error: false,
   allDecks: [],
   currentDeck: [],
@@ -18,31 +19,31 @@ export function reducer(state: State = initialState, action: Action) {
     case actions.DECREMENT_CARD_START:
       return {
         ...state,
-        loading: true,
+        loadingList: true,
       };
     case actions.DECREMENT_CARD_SUCCESS:
       const updatedDeck = [...state.currentDeck];
       updatedDeck[action.payload.indexOfCard] = action.payload.updatedCard;
       return {
         ...state,
-        loading: false,
+        loadingList: false,
         currentDeck: updatedDeck,
       };
     case actions.DECREMENT_CARD_FAILURE:
       return {
         ...state,
-        loading: false,
+        loadingList: false,
         error: action.payload,
       };
     case actions.REMOVE_CARD_START:
       return {
         ...state,
-        loading: true,
+        loadingList: true,
       };
     case actions.REMOVE_CARD_SUCCESS:
       return {
         ...state,
-        loading: false,
+        loadingList: false,
         currentDeck: state.currentDeck.filter(
           (card) => card.name !== action.payload.name
         ),
@@ -50,30 +51,30 @@ export function reducer(state: State = initialState, action: Action) {
     case actions.REMOVE_CARD_FAILURE:
       return {
         ...state,
-        loading: false,
+        loadingList: false,
         error: action.payload,
       };
     case actions.ADD_NEW_CARD_START:
       return {
         ...state,
-        loading: true,
+        loadingList: true,
       };
     case actions.ADD_NEW_CARD_SUCCESS:
       return {
         ...state,
-        loading: true,
+        loadingList: false,
         currentDeck: [...state.currentDeck, action.payload],
       };
     case actions.ADD_NEW_CARD_FAILURE:
       return {
         ...state,
-        loading: false,
+        loadingList: false,
         error: action.payload,
       };
     case actions.INCREMENT_CARD_START:
       return {
         ...state,
-        loading: true,
+        loadingList: true,
       };
     case actions.INCREMENT_CARD_SUCCESS:
       console.log("This is the action.payload: ", action.payload);
@@ -81,13 +82,13 @@ export function reducer(state: State = initialState, action: Action) {
       changedDeck[action.payload.indexOfCard] = action.payload.updatedCard;
       return {
         ...state,
-        loading: false,
+        loadingList: false,
         currentDeck: changedDeck,
       };
     case actions.INCREMENT_CARD_FAILURE:
       return {
         ...state,
-        loading: false,
+        loadingList: false,
         error: action.payload,
       };
     case actions.LOGIN_START:
