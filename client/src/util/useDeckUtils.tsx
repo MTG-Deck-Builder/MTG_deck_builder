@@ -53,9 +53,7 @@ export const useDeckUtils = () => {
     dispatch({ type: REMOVE_CARD_START });
     const { id } = cardToRemove;
     axios
-      .delete(`http://localhost:5000/decks/${currentDeckId}`, {
-        data: { id },
-      })
+      .delete(`http://localhost:5000/decks/${currentDeckId}/${id}`)
       .then((res) => {
         dispatch({
           type: REMOVE_CARD_SUCCESS,

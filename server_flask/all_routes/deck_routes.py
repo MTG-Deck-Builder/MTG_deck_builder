@@ -39,9 +39,9 @@ def update_count(id):
     return jsonify({'message': 'Card count updated'})
 
 # DELETE AN ENTIRE CARD FROM YOUR DECK
-@app.route('/decks/<id>', methods=['DELETE'])
-def delete_card_in_deck(id):
-    card_in_deck = Deck_Cards.query.filter_by(deck_id=id).filter_by(card_id=request.json['id']).first()
+@app.route('/decks/<deck_id>/<card_id>', methods=['DELETE'])
+def delete_card_in_deck(deck_id, card_id):
+    card_in_deck = Deck_Cards.query.filter_by(deck_id=deck_id).filter_by(card_id=card_id).first()
     db.session.delete(card_in_deck)
     db.session.commit()
     return jsonify({'message': 'Card deleted'})
@@ -53,3 +53,11 @@ def add_new_card_to_deck(id):
     db.session.add(add_new_card)
     db.session.commit()
     return jsonify({'message': 'Card added'})
+
+# DELETE A DECK
+@app.route('/decks/<id>', methods=['DELETE'])
+def delete_deck(id):
+    deleted_deck = Deck.query.filter_by(id=id).first()
+    db.session.delete(deleted_deck)
+    db.session.commit()
+    return jsonify({'message': 'Deck deleted'})
