@@ -7,5 +7,24 @@ button {
   border-radius: 50px;
   &:hover {
     cursor: pointer;
+    animation: flame 0.3s infinite;
+  }
+}
+
+@keyframes flame {
+  0% {
+    background: linear-gradient(#f24f09, #f4682b);
+  }
+  25% {
+    background: linear-gradient(#f4682b, #fe911a);
+  }
+  50% {
+    background: linear-gradient(#fe911a, #f4682b);
+  }
+  75% {
+    background: linear-gradient(#f4682b, #f24f09);
+  }
+  100% {
+    background: linear-gradient(#f24f09, #f4682b);
   }
 }

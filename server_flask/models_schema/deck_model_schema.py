@@ -19,14 +19,14 @@ class Deck(db.Model):
     deck_name = db.Column(db.String(100), nullable=False)
     createdAt = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    deck_cards = db.relationship('Deck_Cards', backref='deck', lazy=True)
+    deck_cards = db.relationship('Deck_Cards', backref='deck', cascade="save-update, merge, delete", lazy=True)
 
 # Deck Schema
 
 
 class DeckCardSchema(ma.Schema):
     class Meta:
-        fields = ('name', 'image', 'count', 'id')
+        fields = ('name', 'count', 'id')
 
 
 deck_card_schema = DeckCardSchema()

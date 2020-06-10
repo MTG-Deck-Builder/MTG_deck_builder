@@ -5,7 +5,8 @@ import { Route, Switch } from "react-router-dom";
 // modules
 import Login from "./views/Login/Login";
 import Dashboard from "./views/Dashboard/Dashboard";
-import Decklist from "./views/Decklist/Decklist";
+import Deckbuilder from "./views/Deckbuilder/Deckbuilder";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import "./App.scss";
 
 function App() {
@@ -13,8 +14,8 @@ function App() {
     <>
       <Switch>
         <Route exact path="/" component={Login} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/decklist" component={Decklist} />
+        <ProtectedRoute path="/dashboard" component={Dashboard} />
+        <ProtectedRoute path="/deckbuilder" component={Deckbuilder} />
       </Switch>
     </>
   );
